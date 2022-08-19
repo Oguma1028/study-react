@@ -3,8 +3,13 @@ import styles from "../styles/Home.module.css";
 import { Footer } from "../components/Footer/Footer";
 import { Main } from "../components/Main/Main";
 import { Header } from "../components/Header/Header";
+import { useState } from "react";
 
 export default function Home() {
+  const [count, setCount] = useState(0);
+  const handleClick = (e) => {
+    setCount((count) => count + 1);
+  };
   return (
     <div className={styles.container}>
       <Head>
@@ -14,6 +19,8 @@ export default function Home() {
       </Head>
       <Header />
       <Main page="Index" />
+      <h1>{count}</h1>
+      <button onClick={handleClick}>カウントアップするよ</button>
       <Footer />
     </div>
   );
