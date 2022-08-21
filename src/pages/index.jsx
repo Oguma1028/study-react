@@ -3,13 +3,29 @@ import styles from "../styles/Home.module.css";
 import { Footer } from "../components/Footer/Footer";
 import { Main } from "../components/Main/Main";
 import { Header } from "../components/Header/Header";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 export default function Home() {
   const [count, setCount] = useState(0);
-  const handleClick = (e) => {
+  const [text, setText] = useState("");
+  const [isShow, setIsShow] = useState(true);
+
+  const handleClick = () => {
     setCount((count) => count + 1);
   };
+
+  const handleChange = useCallback((e) => {
+    if (e.target.value.length > 5) {
+      alert("５文字より少なくしてください");
+      return;
+    }
+    setText(e.target.value.trim());
+  }, []);
+
+  const handleShow = useCallback(() => {
+    setIsShow((isShow) => !isShow);
+  });
+
   return (
     <div className={styles.container}>
       <Head>
@@ -19,8 +35,11 @@ export default function Home() {
       </Head>
       <Header />
       <Main page="Index" />
-      <h1>{count}</h1>
+      {isShow ? <h1>{count}</h1> : null}
       <button onClick={handleClick}>カウントアップするよ</button>
+      <button onClick={handleShow}>{isShow ? "非表示" : "表示"}</button>
+      <input type="text" value={text} onChange={handleChange} />
+      <p>{text}</p>
       <Footer />
     </div>
   );
